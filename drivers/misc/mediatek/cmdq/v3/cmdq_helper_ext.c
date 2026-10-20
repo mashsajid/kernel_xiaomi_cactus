@@ -499,12 +499,13 @@ bool cmdq_core_check_user_valid(void *src, u32 size,
 
 		for (va = (u64 *)buffer;
 			va < (u64 *)(buffer + copy_size); va++) {
-			ret = cmdq_core_check_instr_valid(*va, gpr, spr,
-				&spr0);
-			if (unlikely(!ret)) {
-				CMDQ_ERR("instr:%#llx\n", *va);
-				break;
-			}
+			/* cactus: Xiaomi's Pie kernel had no user instruction
+			 * validator; MIUI's MDP (libdpframework) issues writes
+			 * this checker rejects, so only log them.
+			 */
+			if (unlikely(!cmdq_core_check_instr_valid(*va, gpr,
+				spr, &spr0)))
+				CMDQ_LOG("instr not validated:%#llx\n", *va);
 		}
 
 		remain_size -= copy_size;
