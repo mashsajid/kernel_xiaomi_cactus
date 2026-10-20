@@ -1565,6 +1565,7 @@ int dpmgr_path_user_cmd(disp_path_handle dp_handle, unsigned int msg,
 	case DISP_IOCTL_SET_PQINDEX:
 	case DISP_IOCTL_GET_PQINDEX:
 	case DISP_IOCTL_SET_COLOR_REG:
+	case DISP_IOCTL_SET_COLOR_REG_PIE:
 	case DISP_IOCTL_SET_TDSHPINDEX:
 	case DISP_IOCTL_GET_TDSHPINDEX:
 	case DISP_IOCTL_SET_PQ_CAM_PARAM:

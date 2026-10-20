@@ -3475,6 +3475,23 @@ int disp_color_ioctl(enum DISP_MODULE_ENUM module, unsigned int msg,
 
 		break;
 
+	case DISP_IOCTL_SET_COLOR_REG_PIE:
+		/* Pie PQ HAL: copy the 556-byte prefix, newer features off */
+		BUILD_BUG_ON(sizeof(struct DISPLAY_COLOR_REG_PIE) != 556);
+		mutex_lock(&g_color_reg_lock);
+		memset(&g_color_reg, 0, sizeof(g_color_reg));
+		if (copy_from_user(&g_color_reg, (void *)arg,
+			sizeof(struct DISPLAY_COLOR_REG_PIE))) {
+			mutex_unlock(&g_color_reg_lock);
+			COLOR_ERR("DISP_IOCTL_SET_COLOR_REG_PIE Copy from user fail");
+			return -EFAULT;
+		}
+		color_write_hw_reg(module, &g_color_reg, cmdq);
+		g_color_reg_valid = 1;
+		mutex_unlock(&g_color_reg_lock);
+		color_trigger_refresh(module);
+		break;
+
 	case DISP_IOCTL_SET_COLOR_REG:
 		COLOR_DBG("DISP_IOCTL_SET_COLOR_REG");
 

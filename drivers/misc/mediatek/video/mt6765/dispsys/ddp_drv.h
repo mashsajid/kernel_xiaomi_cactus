@@ -202,6 +202,24 @@ struct disp_iommu_device *disp_get_iommu_dev(void);
 	_IOWR(DISP_IOCTL_MAGIC, 78, struct DISP_READ_REG)
 #define DISP_IOCTL_SET_COLOR_REG \
 	_IOWR(DISP_IOCTL_MAGIC, 79, struct DISPLAY_COLOR_REG)
+/* Android 9 (MIUI Pie vendor PQ) layout of DISPLAY_COLOR_REG: 556 bytes,
+ * without S_GAIN_BY_Y/LSP/COLOR_3D. Same ioctl nr, different size. */
+struct DISPLAY_COLOR_REG_PIE {
+	unsigned int GLOBAL_SAT;
+	unsigned int CONTRAST;
+	unsigned int BRIGHTNESS;
+	unsigned int PARTIAL_Y[PARTIAL_Y_SIZE];
+	unsigned int PURP_TONE_S[PQ_PARTIALS_CONTROL][PURP_TONE_SIZE];
+	unsigned int SKIN_TONE_S[PQ_PARTIALS_CONTROL][SKIN_TONE_SIZE];
+	unsigned int GRASS_TONE_S[PQ_PARTIALS_CONTROL][GRASS_TONE_SIZE];
+	unsigned int SKY_TONE_S[PQ_PARTIALS_CONTROL][SKY_TONE_SIZE];
+	unsigned int PURP_TONE_H[PURP_TONE_SIZE];
+	unsigned int SKIN_TONE_H[SKIN_TONE_SIZE];
+	unsigned int GRASS_TONE_H[GRASS_TONE_SIZE];
+	unsigned int SKY_TONE_H[SKY_TONE_SIZE];
+};
+#define DISP_IOCTL_SET_COLOR_REG_PIE \
+	_IOWR(DISP_IOCTL_MAGIC, 79, struct DISPLAY_COLOR_REG_PIE)
 
 /* OD */
 #define DISP_IOCTL_OD_CTL \
