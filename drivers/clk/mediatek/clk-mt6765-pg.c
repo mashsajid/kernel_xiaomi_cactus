@@ -870,7 +870,7 @@ int spm_mtcmos_ctrl_conn_bus_prot(int state)
 #ifndef IGNORE_MTCMOS_CHECK
 		while ((spm_read(INFRA_TOPAXI_PROTECTEN_STA1_1)
 			& CONN_PROT_STEP1_1_ACK_MASK)
-			== CONN_PROT_STEP1_1_ACK_MASK) {
+			!= CONN_PROT_STEP1_1_ACK_MASK) {
 			ram_console_update();
 			if (DBG_STEP == CONN_TIMEOUT_RECOVERY)
 				break;
