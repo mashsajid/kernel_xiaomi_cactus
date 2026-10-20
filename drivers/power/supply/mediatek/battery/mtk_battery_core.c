@@ -415,6 +415,7 @@ void fg_custom_init_from_header(void)
 	fgauge_get_profile_id();
 
 	fg_cust_data.versionID1 = FG_DAEMON_CMD_FROM_USER_NUMBER;
+	BUILD_BUG_ON(sizeof(struct fuel_gauge_custom_data) != 612);
 	fg_cust_data.versionID2 = sizeof(fg_cust_data);
 	fg_cust_data.versionID3 = FG_KERNEL_CMD_FROM_USER_NUMBER;
 	fg_cust_data.fg_get_max = FG_GET_MAX;
@@ -457,15 +458,15 @@ void fg_custom_init_from_header(void)
 	fg_cust_data.aging_one_en = AGING_ONE_EN;
 	fg_cust_data.aging1_update_soc = UNIT_TRANS_100 * AGING1_UPDATE_SOC;
 	fg_cust_data.aging1_load_soc = UNIT_TRANS_100 * AGING1_LOAD_SOC;
-	fg_cust_data.aging4_update_soc = UNIT_TRANS_100 * AGING4_UPDATE_SOC;
-	fg_cust_data.aging4_load_soc = UNIT_TRANS_100 * AGING4_LOAD_SOC;
-	fg_cust_data.aging5_update_soc = UNIT_TRANS_100 * AGING5_UPDATE_SOC;
-	fg_cust_data.aging5_load_soc = UNIT_TRANS_100 * AGING5_LOAD_SOC;
-	fg_cust_data.aging6_update_soc = UNIT_TRANS_100 * AGING6_UPDATE_SOC;
-	fg_cust_data.aging6_load_soc = UNIT_TRANS_100 * AGING6_LOAD_SOC;
+	fg_cust_ext.aging4_update_soc = UNIT_TRANS_100 * AGING4_UPDATE_SOC;
+	fg_cust_ext.aging4_load_soc = UNIT_TRANS_100 * AGING4_LOAD_SOC;
+	fg_cust_ext.aging5_update_soc = UNIT_TRANS_100 * AGING5_UPDATE_SOC;
+	fg_cust_ext.aging5_load_soc = UNIT_TRANS_100 * AGING5_LOAD_SOC;
+	fg_cust_ext.aging6_update_soc = UNIT_TRANS_100 * AGING6_UPDATE_SOC;
+	fg_cust_ext.aging6_load_soc = UNIT_TRANS_100 * AGING6_LOAD_SOC;
 	fg_cust_data.aging_temp_diff = AGING_TEMP_DIFF;
-	fg_cust_data.aging_temp_low_limit = AGING_TEMP_LOW_LIMIT;
-	fg_cust_data.aging_temp_high_limit = AGING_TEMP_HIGH_LIMIT;
+	fg_cust_ext.aging_temp_low_limit = AGING_TEMP_LOW_LIMIT;
+	fg_cust_ext.aging_temp_high_limit = AGING_TEMP_HIGH_LIMIT;
 	fg_cust_data.aging_100_en = AGING_100_EN;
 	fg_cust_data.difference_voltage_update = DIFFERENCE_VOLTAGE_UPDATE;
 	fg_cust_data.aging_factor_min = UNIT_TRANS_100 * AGING_FACTOR_MIN;
@@ -474,9 +475,9 @@ void fg_custom_init_from_header(void)
 	fg_cust_data.aging_two_en = AGING_TWO_EN;
 	/* Aging Compensation 3*/
 	fg_cust_data.aging_third_en = AGING_THIRD_EN;
-	fg_cust_data.aging_4_en = AGING_4_EN;
-	fg_cust_data.aging_5_en = AGING_5_EN;
-	fg_cust_data.aging_6_en = AGING_6_EN;
+	fg_cust_ext.aging_4_en = AGING_4_EN;
+	fg_cust_ext.aging_5_en = AGING_5_EN;
+	fg_cust_ext.aging_6_en = AGING_6_EN;
 
 
 	/* ui_soc related */
@@ -621,8 +622,8 @@ void fg_custom_init_from_header(void)
 	fg_cust_data.ui_low_limit_vth4 = UI_LOW_LIMIT_VTH4;
 	fg_cust_data.ui_low_limit_time = UI_LOW_LIMIT_TIME;
 
-	fg_cust_data.moving_battemp_en = MOVING_BATTEMP_EN;
-	fg_cust_data.moving_battemp_thr = MOVING_BATTEMP_THR;
+	fg_cust_ext.moving_battemp_en = MOVING_BATTEMP_EN;
+	fg_cust_ext.moving_battemp_thr = MOVING_BATTEMP_THR;
 
 #if defined(GM30_DISABLE_NAFG)
 		fg_cust_data.disable_nafg = 1;
@@ -949,26 +950,26 @@ void fg_custom_init_from_dts(struct platform_device *dev)
 		&(fg_cust_data.aging1_load_soc), UNIT_TRANS_100);
 
 	fg_read_dts_val(np, "AGING4_UPDATE_SOC",
-		&(fg_cust_data.aging4_update_soc), UNIT_TRANS_100);
+		&(fg_cust_ext.aging4_update_soc), UNIT_TRANS_100);
 	fg_read_dts_val(np, "AGING4_LOAD_SOC",
-		&(fg_cust_data.aging4_load_soc), UNIT_TRANS_100);
+		&(fg_cust_ext.aging4_load_soc), UNIT_TRANS_100);
 	fg_read_dts_val(np, "AGING5_UPDATE_SOC",
-		&(fg_cust_data.aging5_update_soc), UNIT_TRANS_100);
+		&(fg_cust_ext.aging5_update_soc), UNIT_TRANS_100);
 	fg_read_dts_val(np, "AGING5_LOAD_SOC",
-		&(fg_cust_data.aging5_load_soc), UNIT_TRANS_100);
+		&(fg_cust_ext.aging5_load_soc), UNIT_TRANS_100);
 	fg_read_dts_val(np, "AGING6_UPDATE_SOC",
-		&(fg_cust_data.aging6_update_soc), UNIT_TRANS_100);
+		&(fg_cust_ext.aging6_update_soc), UNIT_TRANS_100);
 	fg_read_dts_val(np, "AGING6_LOAD_SOC",
-		&(fg_cust_data.aging6_load_soc), UNIT_TRANS_100);
+		&(fg_cust_ext.aging6_load_soc), UNIT_TRANS_100);
 
 
 
 	fg_read_dts_val(np, "AGING_TEMP_DIFF",
 		&(fg_cust_data.aging_temp_diff), 1);
 	fg_read_dts_val(np, "AGING_TEMP_LOW_LIMIT",
-		&(fg_cust_data.aging_temp_low_limit), 1);
+		&(fg_cust_ext.aging_temp_low_limit), 1);
 	fg_read_dts_val(np, "AGING_TEMP_HIGH_LIMIT",
-		&(fg_cust_data.aging_temp_high_limit), 1);
+		&(fg_cust_ext.aging_temp_high_limit), 1);
 	fg_read_dts_val(np, "AGING_100_EN", &(fg_cust_data.aging_100_en), 1);
 	fg_read_dts_val(np, "DIFFERENCE_VOLTAGE_UPDATE",
 		&(fg_cust_data.difference_voltage_update), 1);
@@ -1198,9 +1199,9 @@ void fg_custom_init_from_dts(struct platform_device *dev)
 
 	/* average battemp */
 	fg_read_dts_val(np, "MOVING_BATTEMP_EN",
-		&(fg_cust_data.moving_battemp_en), 1);
+		&(fg_cust_ext.moving_battemp_en), 1);
 	fg_read_dts_val(np, "MOVING_BATTEMP_THR",
-		&(fg_cust_data.moving_battemp_thr), 1);
+		&(fg_cust_ext.moving_battemp_thr), 1);
 
 	fg_read_dts_val(np, "DISABLE_MTKBATTERY",
 		(int *)&(gm.disable_mtkbattery), 1);

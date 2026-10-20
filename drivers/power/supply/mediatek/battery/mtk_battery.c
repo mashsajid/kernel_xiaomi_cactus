@@ -499,6 +499,7 @@ int bat_get_debug_level(void)
 static void nl_send_to_user(u32 pid, int seq, struct fgd_nl_msg_t *reply_msg);
 
 struct fuel_gauge_custom_data fg_cust_data;
+struct fuel_gauge_custom_ext fg_cust_ext;
 struct fuel_gauge_table_custom_data fg_table_cust_data;
 
 
@@ -714,17 +715,17 @@ static void proc_dump_dtsi(struct seq_file *m)
 		fg_cust_data.aging1_load_soc);
 
 	seq_printf(m, "AGING4_UPDATE_SOC = %d\n",
-		fg_cust_data.aging4_update_soc);
+		fg_cust_ext.aging4_update_soc);
 	seq_printf(m, "AGING4_LOAD_SOC = %d\n",
-		fg_cust_data.aging4_load_soc);
+		fg_cust_ext.aging4_load_soc);
 	seq_printf(m, "AGING5_UPDATE_SOC = %d\n",
-		fg_cust_data.aging5_update_soc);
+		fg_cust_ext.aging5_update_soc);
 	seq_printf(m, "AGING5_LOAD_SOC = %d\n",
-		fg_cust_data.aging5_load_soc);
+		fg_cust_ext.aging5_load_soc);
 	seq_printf(m, "AGING6_UPDATE_SOC = %d\n",
-		fg_cust_data.aging6_update_soc);
+		fg_cust_ext.aging6_update_soc);
 	seq_printf(m, "AGING6_LOAD_SOC = %d\n",
-		fg_cust_data.aging6_load_soc);
+		fg_cust_ext.aging6_load_soc);
 
 	seq_printf(m, "AGING_TEMP_DIFF = %d\n",
 		fg_cust_data.aging_temp_diff);
@@ -735,11 +736,11 @@ static void proc_dump_dtsi(struct seq_file *m)
 	seq_printf(m, "AGING_THIRD_EN = %d\n",
 		fg_cust_data.aging_third_en);
 	seq_printf(m, "AGING_4_EN = %d\n",
-		fg_cust_data.aging_4_en);
+		fg_cust_ext.aging_4_en);
 	seq_printf(m, "AGING_5_EN = %d\n",
-		fg_cust_data.aging_5_en);
+		fg_cust_ext.aging_5_en);
 	seq_printf(m, "AGING_6_EN = %d\n",
-		fg_cust_data.aging_6_en);
+		fg_cust_ext.aging_6_en);
 	seq_printf(m, "DIFF_SOC_SETTING = %d\n",
 		fg_cust_data.diff_soc_setting);
 	seq_printf(m, "DIFF_BAT_TEMP_SETTING = %d\n",

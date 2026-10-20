@@ -224,13 +224,15 @@ enum Fg_kernel_cmds {
 	FG_KERNEL_CMD_CHANG_LOGLEVEL,
 	FG_KERNEL_CMD_REQ_ALGO_DATA,
 	FG_KERNEL_CMD_RESET_AGING_FACTOR,
+
+	FG_KERNEL_CMD_FROM_USER_NUMBER,
+
+	/* cactus: newer cmds kept out of the count to match the MIUI Pie fuelgauged ABI */
 	FG_KERNEL_CMD_BUILD_SEL_BATTEMP,
 	FG_KERNEL_CMD_UPDATE_AVG_BATTEMP,
 	FG_KERNEL_CMD_SAVE_DEBUG_PARAM,
 	FG_KERNEL_CMD_REQ_CHANGE_AGING_DATA,
 	FG_KERNEL_CMD_AG_LOG_TEST,
-
-	FG_KERNEL_CMD_FROM_USER_NUMBER
 
 };
 
@@ -369,16 +371,8 @@ struct fuel_gauge_custom_data {
 	int aging_one_en;
 	int aging1_update_soc;
 	int aging1_load_soc;
-	int aging4_update_soc;
-	int aging4_load_soc;
-	int aging5_update_soc;
-	int aging5_load_soc;
-	int aging6_update_soc;
-	int aging6_load_soc;
 
 	int aging_temp_diff;
-	int aging_temp_low_limit;
-	int aging_temp_high_limit;
 	int aging_100_en;
 	int difference_voltage_update;
 
@@ -387,9 +381,6 @@ struct fuel_gauge_custom_data {
 
 	/* Aging Compensation 3*/
 	int aging_third_en;
-	int aging_4_en;
-	int aging_5_en;
-	int aging_6_en;
 
 
 	/* ui_soc */
@@ -505,8 +496,6 @@ struct fuel_gauge_custom_data {
 	int ui_low_limit_time;
 
 	/* moving average bat_temp */
-	int moving_battemp_en;
-	int moving_battemp_thr;
 
 	int d0_sel;
 	int dod_init_sel;
@@ -545,6 +534,24 @@ struct fuel_gauge_custom_data {
 	int record_log;
 
 };
+
+/* cactus: fields of newer MTK trees that MIUI Pie fuelgauged does not know (sizeof must stay 612) */
+struct fuel_gauge_custom_ext {
+	int aging4_update_soc;
+	int aging4_load_soc;
+	int aging5_update_soc;
+	int aging5_load_soc;
+	int aging6_update_soc;
+	int aging6_load_soc;
+	int aging_temp_low_limit;
+	int aging_temp_high_limit;
+	int aging_4_en;
+	int aging_5_en;
+	int aging_6_en;
+	int moving_battemp_en;
+	int moving_battemp_thr;
+};
+
 
 struct FUELGAUGE_TEMPERATURE {
 	signed int BatteryTemp;
@@ -863,6 +870,7 @@ enum {
 extern struct mtk_battery gm;
 extern struct battery_data battery_main;
 extern struct fuel_gauge_custom_data fg_cust_data;
+extern struct fuel_gauge_custom_ext fg_cust_ext;
 extern struct fuel_gauge_table_custom_data fg_table_cust_data;
 extern struct gauge_hw_status FG_status;
 extern struct FUELGAUGE_TEMPERATURE Fg_Temperature_Table[];
