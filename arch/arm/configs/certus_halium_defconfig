@@ -733,3 +733,5 @@ CONFIG_BT_HCIVHCI=y
 CONFIG_RFKILL=y
 CONFIG_CRYPTO_ECDH=y
 CONFIG_CRYPTO_CMAC=y
+# cactus: /sys/power/autosleep for repowerd (libsuspend)
+CONFIG_PM_AUTOSLEEP=y
