@@ -377,6 +377,15 @@ static long ion_sys_cache_sync(struct ion_client *client,
 	sync_va = (unsigned long)param->va;
 	sync_size = param->size;
 
+	/* cactus: the MIUI Pie vendor (e.g. libcamdrv_imem) leaves va/size
+	 * uninitialised for the non-PA "by range" types; Xiaomi's kernel always
+	 * syncs the whole buffer for them, so do the same for user requests.
+	 */
+	if (!from_kernel && sync_type <= ION_CACHE_FLUSH_BY_RANGE) {
+		sync_va = 0;
+		sync_size = 0;
+	}
+
 	switch (sync_type) {
 	case ION_CACHE_CLEAN_BY_RANGE:
 	case ION_CACHE_INVALID_BY_RANGE:
