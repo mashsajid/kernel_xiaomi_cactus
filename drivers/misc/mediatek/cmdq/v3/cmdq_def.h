@@ -441,9 +441,6 @@ struct cmdqSecDataStruct {
 
 	/* ISP metadata for secure camera */
 	struct cmdqSecIspMeta ispMeta;
-
-	/* client extension feature */
-	uint64_t extension;
 };
 
 struct cmdq_v3_replace_struct {
