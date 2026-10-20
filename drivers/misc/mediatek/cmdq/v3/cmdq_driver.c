@@ -1110,7 +1110,7 @@ static long cmdq_ioctl(struct file *pf, unsigned int code,
 	CMDQ_VERBOSE("%s code:0x%08x f:0x%p\n", __func__, code, pf);
 
 	switch (code) {
-#if 0
+#if 1 /* cactus: MIUI Pie libdpframework (MDP) still uses the legacy job ioctls */
 	case CMDQ_IOCTL_EXEC_COMMAND:
 		status = cmdq_driver_ioctl_exec_command(pf, param);
 		break;
@@ -1118,7 +1118,7 @@ static long cmdq_ioctl(struct file *pf, unsigned int code,
 	case CMDQ_IOCTL_QUERY_USAGE:
 		status = cmdq_driver_ioctl_query_usage(pf, param);
 		break;
-#if 0
+#if 1 /* cactus: MIUI Pie libdpframework (MDP) still uses the legacy job ioctls */
 	case CMDQ_IOCTL_ASYNC_JOB_EXEC:
 		CMDQ_SYSTRACE_BEGIN("%s_async_job_exec\n", __func__);
 		status = cmdq_driver_ioctl_async_job_exec(pf, param);
